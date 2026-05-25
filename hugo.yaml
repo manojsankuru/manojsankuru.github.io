@@ -1,0 +1,49 @@
+baseURL: "https://manojcygnus.github.io/"
+title: "Manoj | Research Portfolio"
+theme: "PaperMod"
+
+minify:
+  disableXMLMin: false
+  minifyOutput: true
+
+params:
+  env: "production"
+  title: "Your Name"
+  description: "PhD Researcher focusing on Artificial Intelligence and Systems Engineering."
+  
+  # Profile mode layout for home page
+  profileMode:
+    enabled: true
+    title: "Your Name"
+    subtitle: "PhD Researcher & Graduate Assistant | Core Interests: LLMs, Multi-Agent Systems, & Program Analysis"
+    imageUrl: "images/profile.jpg" # Place your photo at static/images/profile.jpg
+    imageWidth: 150
+    imageHeight: 150
+    buttons:
+      - name: "Research Projects"
+        url: "/projects/"
+      - name: "Publications"
+        url: "/publications/"
+
+  # Social Icons
+  socialIcons:
+    - name: "github"
+      url: "https://github.com/your-username"
+    - name: "googlescholar"
+      url: "https://scholar.google.com/..."
+    - name: "linkedin"
+      url: "https://linkedin.com/in/your-username"
+    - name: "email"
+      url: "mailto:your.email@university.edu"
+
+menu:
+  main:
+    - name: "Projects"
+      url: "/projects/"
+      weight: 10
+    - name: "Publications"
+      url: "/publications/"
+      weight: 20
+    - name: "CV"
+      url: "/cv.pdf" # Place your CV PDF at static/cv.pdf
+      weight: 30
