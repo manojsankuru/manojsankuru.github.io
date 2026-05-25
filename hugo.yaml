@@ -1,11 +1,12 @@
 baseURL: "https://manojsankuru.github.io/"
 title: "Manoj Sankuru | Research Portfolio"
 theme: "PaperMod"
+publishDir: "docs"
 
 minify:
   disableXMLMin: false
   minifyOutput: true
-
+# ... leave everything else below exactly the same
 params:
   env: "production"
   title: "Manoj Sankuru"
