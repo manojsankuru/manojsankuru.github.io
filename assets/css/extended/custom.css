@@ -1,53 +1,115 @@
-/* Custom Portfolio Aesthetics */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    letter-spacing: -0.01em;
+/* ==========================================
+   BULLETPROOF PORTFOLIO AESTHETICS RESET
+   ========================================== */
+
+/* Establish modern dark mode variables */
+:root {
+    --bg-dark: #1d1e20;
+    --card-dark: #2e2e33;
+    --border-dark: #333436;
+    --text-main: #e1e1e3;
+    --text-muted: #b5b7ba;
 }
 
-/* Make the profile header card look elegant */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-dark) !important;
+    color: var(--text-main) !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Center the core profile block cleanly */
+.profile {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 75vh !important;
+    padding: 40px 20px !important;
+}
+
+.profile_inner {
+    text-align: center !important;
+    max-width: 650px !important;
+    margin: 0 auto !important;
+}
+
+/* Constrain profile image sizing */
+.profile_inner img {
+    border-radius: 50% !important;
+    border: 3px solid var(--border-dark) !important;
+    width: 150px !important;
+    height: 150px !important;
+    object-fit: cover !important;
+    margin-bottom: 15px !important;
+}
+
+/* Name heading style */
 .profile_inner h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    margin-top: 15px;
-    margin-bottom: 10px;
+    font-size: 2.4rem !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    margin: 10px 0 !important;
 }
 
-/* Clean up paragraph spacing inside the profile bio */
-.profile_inner span {
-    font-size: 1.15rem;
-    line-height: 1.6;
-    color: var(--content);
-    max-width: 620px;
-    margin: 0 auto;
+/* FORCE SOCIAL ICONS TO BE SMALL AND HORIZONTAL */
+.social-icons {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    margin: 20px 0 !important;
+    padding: 0 !important;
+    gap: 18px !important;
 }
 
-/* Spruce up the navigation buttons */
-.buttons .button {
-    background: var(--entry) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 8px !important;
-    padding: 10px 20px !important;
-    font-weight: 600 !important;
-    font-size: 0.95rem !important;
-    transition: all 0.2s ease-in-out !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
-}
-
-.buttons .button:hover {
-    transform: translateY(-2px);
-    border-color: var(--primary) !important;
-    background: var(--tertiary) !important;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* Grid layout for social media connectivity layout icons */
 .social-icons a {
-    margin: 0 8px;
-    transition: color 0.15s ease;
+    display: inline-flex !important;
+    color: var(--text-muted) !important;
+    text-decoration: none !important;
+    transition: transform 0.2s ease, color 0.2s ease !important;
 }
 
 .social-icons a:hover {
-    color: var(--primary);
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Lock down SVG dimensions completely */
+.social-icons svg {
+    width: 26px !important;
+    height: 26px !important;
+    display: block !important;
+    stroke: currentColor !important;
+    fill: none !important;
+}
+
+/* Format Action Navigation Buttons */
+.buttons {
+    display: flex !important;
+    gap: 15px !important;
+    justify-content: center !important;
+    margin-top: 25px !important;
+}
+
+.buttons .button {
+    background: var(--card-dark) !important;
+    border: 1px solid var(--border-dark) !important;
+    border-radius: 8px !important;
+    padding: 12px 24px !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.buttons .button:hover {
+    background: #343439 !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Hide back-to-top chevron if it falls out of layout */
+#top-link, .top-link {
+    display: none !important;
 }
