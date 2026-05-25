@@ -1,41 +1,50 @@
 baseURL: "https://manojsankuru.github.io/"
-title: "Manoj Sankuru | Research Portfolio"
+title: "Manoj Sankuru"
 theme: "PaperMod"
 publishDir: "docs"
 
 minify:
   disableXMLMin: false
   minifyOutput: true
-# ... leave everything else below exactly the same
+
 params:
   env: "production"
   title: "Manoj Sankuru"
-  description: "PhD Researcher focusing on Artificial Intelligence, LLMs, and Systems Engineering."
+  description: "PhD Researcher in Computer & Information Sciences at Clemson University focusing on LLMs, Multi-Agent Systems, and Program Analysis."
   
-  # Minimalist Profile Mode Homepage Configuration
+  # Smooth theme toggle transition styling
+  defaultTheme: auto
+  disableThemeToggle: false
+  ShowShareButtons: false
+  ShowCodeCopyButtons: true
+
+  # Premium Profile Mode Setup
   profileMode:
     enabled: true
     title: "Manoj Sankuru"
-    subtitle: "PhD Researcher & Graduate Assistant | Core Interests: LLMs, Multi-Agent Systems, & Program Analysis"
-    imageUrl: "images/profile.jpg" # Drop your headshot image into static/images/profile.jpg
-    imageWidth: 150
-    imageHeight: 150
+    subtitle: >
+      **PhD Researcher & Graduate Assistant** <br>
+      *Department of Computer and Information Sciences, Clemson University* <br><br>
+      Specializing in the intersection of **Large Language Models (LLMs)**, **Reinforcement Learning**, and optimizing concurrent **Multi-Agent Systems** for automated program analysis.
+    imageUrl: "images/profile.jpg" # Ensure your square cropped headshot is at static/images/profile.jpg
+    imageWidth: 160
+    imageHeight: 160
     buttons:
-      - name: "Research Projects"
+      - name: "📂 Explore Research Projects"
         url: "/projects/"
-      - name: "Publications"
+      - name: "📝 View Publications"
         url: "/publications/"
 
-  # Connected Identity Networks
+  # Fixed Identity Networks (No broken landing links)
   socialIcons:
     - name: "github"
       url: "https://github.com/manojsankuru"
     - name: "googlescholar"
-      url: "https://scholar.google.com/"
+      url: "https://scholar.google.com/" # Replace with your direct scholar ID link later
     - name: "linkedin"
-      url: "https://linkedin.com/"
+      url: "https://linkedin.com/" # Replace with your direct profile slug later
     - name: "email"
-      url: "mailto:your-email@university.edu"
+      url: "mailto:msankur@clemson.edu"
 
 menu:
   main:
@@ -45,6 +54,6 @@ menu:
     - name: "Publications"
       url: "/publications/"
       weight: 20
-    - name: "CV"
-      url: "/cv.pdf" # Drop your academic CV into static/cv.pdf
+    - name: "Academic CV"
+      url: "/cv.pdf" # Drop your current CV PDF directly inside static/cv.pdf
       weight: 30

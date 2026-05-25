@@ -1,0 +1,53 @@
+/* Custom Portfolio Aesthetics */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: -0.01em;
+}
+
+/* Make the profile header card look elegant */
+.profile_inner h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+/* Clean up paragraph spacing inside the profile bio */
+.profile_inner span {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--content);
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+/* Spruce up the navigation buttons */
+.buttons .button {
+    background: var(--entry) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    transition: all 0.2s ease-in-out !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+}
+
+.buttons .button:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary) !important;
+    background: var(--tertiary) !important;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Grid layout for social media connectivity layout icons */
+.social-icons a {
+    margin: 0 8px;
+    transition: color 0.15s ease;
+}
+
+.social-icons a:hover {
+    color: var(--primary);
+}
