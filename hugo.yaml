@@ -1,5 +1,5 @@
-baseURL: "https://manojcygnus.github.io/"
-title: "Manoj | Research Portfolio"
+baseURL: "https://manojsankuru.github.io/"
+title: "Manoj Sankuru | Research Portfolio"
 theme: "PaperMod"
 
 minify:
@@ -8,15 +8,15 @@ minify:
 
 params:
   env: "production"
-  title: "Your Name"
-  description: "PhD Researcher focusing on Artificial Intelligence and Systems Engineering."
+  title: "Manoj Sankuru"
+  description: "PhD Researcher focusing on Artificial Intelligence, LLMs, and Systems Engineering."
   
-  # Profile mode layout for home page
+  # Minimalist Profile Mode Homepage Configuration
   profileMode:
     enabled: true
-    title: "Your Name"
+    title: "Manoj Sankuru"
     subtitle: "PhD Researcher & Graduate Assistant | Core Interests: LLMs, Multi-Agent Systems, & Program Analysis"
-    imageUrl: "images/profile.jpg" # Place your photo at static/images/profile.jpg
+    imageUrl: "images/profile.jpg" # Drop your headshot image into static/images/profile.jpg
     imageWidth: 150
     imageHeight: 150
     buttons:
@@ -25,16 +25,16 @@ params:
       - name: "Publications"
         url: "/publications/"
 
-  # Social Icons
+  # Connected Identity Networks
   socialIcons:
     - name: "github"
-      url: "https://github.com/your-username"
+      url: "https://github.com/manojsankuru"
     - name: "googlescholar"
-      url: "https://scholar.google.com/..."
+      url: "https://scholar.google.com/"
     - name: "linkedin"
-      url: "https://linkedin.com/in/your-username"
+      url: "https://linkedin.com/"
     - name: "email"
-      url: "mailto:your.email@university.edu"
+      url: "mailto:your-email@university.edu"
 
 menu:
   main:
@@ -45,5 +45,5 @@ menu:
       url: "/publications/"
       weight: 20
     - name: "CV"
-      url: "/cv.pdf" # Place your CV PDF at static/cv.pdf
+      url: "/cv.pdf" # Drop your academic CV into static/cv.pdf
       weight: 30
