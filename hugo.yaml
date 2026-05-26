@@ -22,6 +22,9 @@ params:
   ShowShareButtons: false
   ShowCodeCopyButtons: true
 
+  assets:
+    disableFingerprinting: true   # Prevents CRLF/LF SRI hash mismatch on Windows builds
+
   # Premium Profile Mode Setup
   profileMode:
     enabled: true

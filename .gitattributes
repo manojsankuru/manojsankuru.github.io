@@ -1,0 +1,6 @@
+# Normalize all text files to LF in the repository
+* text=auto eol=lf
+
+# Treat compiled CSS/JS as binary — no line-ending transformation ever
+docs/assets/css/*.css binary
+docs/assets/js/*.js   binary
