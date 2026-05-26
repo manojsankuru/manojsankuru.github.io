@@ -1,0 +1,60 @@
+{{/*
+  post_meta.html — project-level override of PaperMod's default.
+  Render order: pub-type badge → venue → authors → event_date → doi → date
+  Every field is optional; missing params are silently skipped.
+*/}}
+{{- $scratch := newScratch }}
+
+{{/* ── Publication type badge ── */}}
+{{- with .Params.pubtype }}
+  {{- $label := . }}
+  {{- if eq . "poster"   }}{{- $label = "Poster Presentation" }}{{- end }}
+  {{- if eq . "paper"    }}{{- $label = "Conference Paper"    }}{{- end }}
+  {{- if eq . "journal"  }}{{- $label = "Journal Article"     }}{{- end }}
+  {{- if eq . "workshop" }}{{- $label = "Workshop Paper"      }}{{- end }}
+  {{- if eq . "preprint" }}{{- $label = "Preprint"            }}{{- end }}
+  {{- $scratch.Add "meta" (slice (printf `<span class="pub-type-badge pub-type-%s">%s</span>` . $label)) }}
+{{- end }}
+
+{{/* ── Venue ── */}}
+{{- with .Params.venue }}
+  {{- $scratch.Add "meta" (slice (printf `<span class="pub-venue">%s</span>` .)) }}
+{{- end }}
+
+{{/* ── Authors ── */}}
+{{- with .Params.authors }}
+  {{- $scratch.Add "meta" (slice (printf `<span class="pub-authors">%s</span>` .)) }}
+{{- end }}
+
+{{/* ── Event date (e.g. "April 16–17, 2025") ── */}}
+{{- with .Params.event_date }}
+  {{- $scratch.Add "meta" (slice (printf `<span class="pub-event-date">%s</span>` .)) }}
+{{- end }}
+
+{{/* ── DOI ── */}}
+{{- with .Params.doi }}
+  {{- $scratch.Add "meta" (slice (printf `<span class="pub-doi">DOI: <a href="https://doi.org/%s" target="_blank" rel="noopener">%s</a></span>` . .)) }}
+{{- end }}
+
+{{/* ── Fallback: Hugo page date ── */}}
+{{- if not .Date.IsZero -}}
+  {{- $scratch.Add "meta" (slice (printf "<span title='%s'>%s</span>" (.Date) (.Date | time.Format (default ":date_long" site.Params.DateFormat)))) }}
+{{- end }}
+
+{{/* ── PaperMod extras (opt-in) ── */}}
+{{- if (.Param "ShowReadingTime") -}}
+  {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (i18n "read_time" .ReadingTime | default (printf "%d min" .ReadingTime)))) }}
+{{- end }}
+{{- if (.Param "ShowWordCount") -}}
+  {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (i18n "words" .WordCount | default (printf "%d words" .WordCount)))) }}
+{{- end }}
+{{- if not (.Param "hideAuthor") -}}
+  {{- with (partial "author.html" .) }}
+    {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" .)) }}
+  {{- end }}
+{{- end }}
+
+{{/* ── Render ── */}}
+{{- with ($scratch.Get "meta") }}
+  {{- delimit . "&nbsp;·&nbsp;" | safeHTML -}}
+{{- end -}}

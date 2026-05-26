@@ -7,6 +7,11 @@ minify:
   disableXMLMin: false
   minifyOutput: true
 
+markup:
+  goldmark:
+    renderer:
+      unsafe: true   # Required to render <br> tags in profileMode subtitle
+
 params:
   env: "production"
   title: "Manoj Sankuru"

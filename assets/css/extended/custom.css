@@ -1,115 +1,748 @@
-/* ==========================================
-   BULLETPROOF PORTFOLIO AESTHETICS RESET
-   ========================================== */
+/* ============================================================
+   RESEARCH PORTFOLIO — PREMIUM DARK DESIGN SYSTEM
+   Strategy: Override PaperMod's --variables at :root level so
+   the theme's own components (header, entries, buttons, etc.)
+   inherit automatically. Only add selector-specific rules when
+   variables alone are insufficient.
+   ============================================================ */
 
-/* Establish modern dark mode variables */
+/* ── 1. GOOGLE FONTS IMPORT ─────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ── 2. DESIGN TOKENS ────────────────────────────────────── */
 :root {
-    --bg-dark: #1d1e20;
-    --card-dark: #2e2e33;
-    --border-dark: #333436;
-    --text-main: #e1e1e3;
-    --text-muted: #b5b7ba;
+    /* Layout */
+    --gap:            28px;
+    --content-gap:    22px;
+    --nav-width:      1100px;
+    --main-width:     760px;
+    --header-height:  64px;
+    --radius:         10px;
+
+    /* Light-mode palette — clean off-white with warm slate */
+    --theme:          #f7f8fa;
+    --entry:          #ffffff;
+    --primary:        #1a1c1e;
+    --secondary:      #5a6070;
+    --tertiary:       #e4e6eb;
+    --content:        #2c2f36;
+    --border:         #e0e2e8;
+    --code-bg:        #f0f1f4;
+    --code-block-bg:  #1c1d21;
+
+    /* Accent — electric indigo */
+    --accent:         #6366f1;
+    --accent-hover:   #4f52e0;
+    --accent-subtle:  rgba(99, 102, 241, 0.10);
+    --accent-glow:    rgba(99, 102, 241, 0.25);
+
+    color-scheme: light;
 }
 
+/* Dark-mode palette — premium charcoal slate, never pure black */
+:root[data-theme="dark"] {
+    --theme:          #13141a;
+    --entry:          #1c1d25;
+    --primary:        #e8eaf0;
+    --secondary:      #8b8fa8;
+    --tertiary:       #272936;
+    --content:        #c8cad8;
+    --border:         #2a2c3a;
+    --code-bg:        #252735;
+    --code-block-bg:  #1a1b24;
+
+    /* Accent stays the same; subtle shifts for dark context */
+    --accent:         #818cf8;
+    --accent-hover:   #a5b4fc;
+    --accent-subtle:  rgba(129, 140, 248, 0.12);
+    --accent-glow:    rgba(129, 140, 248, 0.30);
+
+    color-scheme: dark;
+}
+
+/* List pages: use theme background uniformly */
+.list,
+[data-theme="dark"] .list {
+    background: var(--theme);
+}
+
+/* ── 3. GLOBAL BASE ──────────────────────────────────────── */
 html, body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-dark) !important;
-    color: var(--text-main) !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont,
+                 'Segoe UI', system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--theme);
+    color: var(--primary);
 }
 
-/* Center the core profile block cleanly */
-.profile {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 75vh !important;
-    padding: 40px 20px !important;
+/* Heading scale + tight tracking */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--primary);
 }
 
-.profile_inner {
-    text-align: center !important;
-    max-width: 650px !important;
-    margin: 0 auto !important;
+/* Smooth accent-coloured links */
+a {
+    color: var(--accent);
+    transition: color 0.18s ease;
+}
+a:hover { color: var(--accent-hover); }
+
+/* ── 4. NAVIGATION / HEADER ─────────────────────────────── */
+.header-nav {
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    background: color-mix(in srgb, var(--theme) 82%, transparent);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-/* Constrain profile image sizing */
-.profile_inner img {
-    border-radius: 50% !important;
-    border: 3px solid var(--border-dark) !important;
-    width: 150px !important;
-    height: 150px !important;
-    object-fit: cover !important;
-    margin-bottom: 15px !important;
+.logo a {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--primary);
 }
 
-/* Name heading style */
-.profile_inner h1 {
-    font-size: 2.4rem !important;
-    font-weight: 800 !important;
-    color: #ffffff !important;
-    margin: 10px 0 !important;
+.menu a {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--secondary);
+    transition: color 0.18s ease;
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+}
+.menu a:hover,
+.menu .active {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom-color: var(--accent);
+}
+/* Override PaperMod's underline-decoration on active */
+.menu .active {
+    text-decoration: none !important;
+    font-weight: 600;
 }
 
-/* FORCE SOCIAL ICONS TO BE SMALL AND HORIZONTAL */
+/* ── 5. PROFILE HERO ─────────────────────────────────────── */
+.main .profile {
+    min-height: calc(100vh - var(--header-height) - 80px);
+    padding: 60px 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile .profile_inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;           /* custom spacing below handles gaps */
+    text-align: center;
+    max-width: 680px;
+}
+
+/* Avatar */
+.profile img {
+    width: 148px;
+    height: 148px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--border);
+    box-shadow:
+        0 0 0 6px var(--accent-subtle),
+        0 12px 40px rgba(0, 0, 0, 0.18);
+    margin-bottom: 28px;
+    transition: box-shadow 0.3s ease;
+}
+.profile img:hover {
+    box-shadow:
+        0 0 0 6px var(--accent-glow),
+        0 16px 48px rgba(0, 0, 0, 0.28);
+}
+
+/* Name heading */
+.profile .profile_inner h1 {
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--primary);
+    margin-bottom: 14px;
+}
+
+/* Subtitle / bio */
+.profile .profile_inner p,
+.profile .profile_inner .profile-sub {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--secondary);
+    max-width: 580px;
+    margin: 0 auto 28px;
+}
+
+/* Bold/italic emphasis inside subtitle */
+.profile .profile_inner p strong {
+    color: var(--primary);
+    font-weight: 600;
+}
+.profile .profile_inner p em {
+    color: var(--secondary);
+    font-style: normal;
+    font-weight: 400;
+}
+
+/* ── 6. SOCIAL ICONS ─────────────────────────────────────── */
 .social-icons {
     display: flex !important;
     flex-direction: row !important;
-    justify-content: center !important;
-    align-items: center !important;
-    flex-wrap: wrap !important;
-    margin: 20px 0 !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin: 4px 0 28px !important;
     padding: 0 !important;
-    gap: 18px !important;
+    list-style: none;
 }
 
 .social-icons a {
-    display: inline-flex !important;
-    color: var(--text-muted) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    color: var(--secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    transition:
+        color        0.18s ease,
+        background   0.18s ease,
+        border-color 0.18s ease,
+        transform    0.18s ease;
     text-decoration: none !important;
-    transition: transform 0.2s ease, color 0.2s ease !important;
 }
-
 .social-icons a:hover {
-    color: #ffffff !important;
-    transform: translateY(-2px) !important;
+    color: var(--accent);
+    background: var(--accent-subtle);
+    border-color: var(--accent-glow);
+    transform: translateY(-2px);
 }
 
-/* Lock down SVG dimensions completely */
 .social-icons svg {
-    width: 26px !important;
-    height: 26px !important;
-    display: block !important;
-    stroke: currentColor !important;
-    fill: none !important;
+    width: 22px !important;
+    height: 22px !important;
+    display: block;
+    fill: none;
+    stroke: currentColor;
 }
 
-/* Format Action Navigation Buttons */
+/* ── 7. PROFILE ACTION BUTTONS ───────────────────────────── */
 .buttons {
-    display: flex !important;
-    gap: 15px !important;
-    justify-content: center !important;
-    margin-top: 25px !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 8px;
+    max-width: 100%;
 }
 
-.buttons .button {
-    background: var(--card-dark) !important;
-    border: 1px solid var(--border-dark) !important;
-    border-radius: 8px !important;
-    padding: 12px 24px !important;
-    color: #ffffff !important;
-    font-weight: 600 !important;
-    text-decoration: none !important;
-    transition: all 0.2s ease !important;
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    letter-spacing: 0.01em;
+    color: var(--primary);
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background      0.20s ease,
+        border-color    0.20s ease,
+        color           0.20s ease,
+        box-shadow      0.20s ease,
+        transform       0.20s ease;
+}
+.button:hover {
+    background: var(--accent-subtle);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 4px 16px var(--accent-glow);
+    transform: translateY(-2px);
+}
+/* Primary CTA: first button gets a filled accent treatment */
+.buttons .button:first-child {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 2px 12px var(--accent-glow);
+}
+.buttons .button:first-child:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: #ffffff;
+    box-shadow: 0 6px 24px var(--accent-glow);
+    transform: translateY(-2px);
 }
 
-.buttons .button:hover {
-    background: #343439 !important;
-    transform: translateY(-2px) !important;
+/* ── 8. PUBLICATION / POST ENTRY CARDS ───────────────────── */
+.post-entry {
+    position: relative;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px 28px;
+    margin-bottom: 18px;
+    transition:
+        border-color 0.22s ease,
+        box-shadow   0.22s ease,
+        transform    0.22s ease;
+}
+.post-entry:hover,
+.post-entry:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 6px 28px var(--accent-glow);
+    transform: translateY(-3px);
 }
 
-/* Hide back-to-top chevron if it falls out of layout */
-#top-link, .top-link {
-    display: none !important;
+/* Card title */
+.entry-header h2 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.35;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+/* Card abstract/summary */
+.entry-content {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--secondary);
+    margin: 8px 0 12px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+}
+
+/* Card footer: date + tags row */
+.entry-footer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--secondary);
+    margin-top: 14px;
+}
+
+/* Tag chips — .terms links are rendered by PaperMod's terms system */
+.entry-footer a,
+.post-tags a,
+.terms-tags a {
+    display: inline-flex;
+    align-items: center;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    border: 1px solid var(--accent-glow);
+    border-radius: 6px;
+    padding: 2px 9px;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition:
+        background   0.18s ease,
+        border-color 0.18s ease;
+}
+.entry-footer a:hover,
+.post-tags a:hover,
+.terms-tags a:hover {
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
+}
+
+/* ── 9. PAGE / SECTION HEADERS ───────────────────────────── */
+.page-header h1 {
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+/* Thin separator under page titles */
+.page-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+}
+
+/* ── 10. SINGLE POST — PUBLICATION DETAIL PAGE ───────────── */
+.post-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.post-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    color: var(--primary);
+}
+
+.post-meta {
+    font-size: 13px;
+    color: var(--secondary);
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Tags on post detail */
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+/* ── 11. MD-CONTENT PROSE ────────────────────────────────── */
+.md-content,
+.post-content {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--content);
+}
+
+.md-content h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 36px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--primary);
+}
+.md-content h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 28px 0 12px;
+    color: var(--primary);
+}
+
+/* Blockquote — left-accent style */
+.md-content blockquote {
+    border-inline-start: 3px solid var(--accent);
+    background: var(--accent-subtle);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 18px;
+    margin: 20px 0;
+    color: var(--content);
+    font-style: normal;
+}
+
+/* Horizontal rules */
+.md-content hr {
+    height: 1px;
+    background: var(--border);
+    border: none;
+    margin: 32px 0;
+}
+
+/* Inline code */
+.post-content code,
+.md-content code:not(pre code) {
+    background: var(--code-bg);
+    color: var(--accent);
+    border-radius: 5px;
+    padding: 0.15em 0.4em;
+    font-size: 0.82em;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+
+/* Code blocks */
+.md-content pre,
+.md-content .highlight {
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+/* In-text links */
+.md-content a:not(.anchor) {
+    color: var(--accent);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--accent-glow);
+}
+.md-content a:not(.anchor):hover {
+    color: var(--accent-hover);
+    text-decoration-color: var(--accent-hover);
+}
+
+/* ── 12. PUBLICATION TYPE BADGES & VENUE ────────────────── */
+
+/*
+  Shared badge base — used for poster, paper, journal, workshop, preprint.
+  Rendered by our post_meta.html partial override.
+*/
+.pub-type-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+/* Poster — amber/gold: visually distinct from indigo paper/preprint */
+.pub-type-poster {
+    background: rgba(245, 158, 11, 0.12);
+    color:       #d97706;
+    border-color: rgba(245, 158, 11, 0.30);
+}
+:root[data-theme="dark"] .pub-type-poster {
+    background: rgba(251, 191, 36, 0.10);
+    color:       #fbbf24;
+    border-color: rgba(251, 191, 36, 0.25);
+}
+
+/* Conference / full paper — accent indigo (matches site palette) */
+.pub-type-paper {
+    background: var(--accent-subtle);
+    color:       var(--accent);
+    border-color: var(--accent-glow);
+}
+
+/* Journal article — teal/emerald */
+.pub-type-journal {
+    background: rgba(16, 185, 129, 0.10);
+    color:       #059669;
+    border-color: rgba(16, 185, 129, 0.25);
+}
+:root[data-theme="dark"] .pub-type-journal {
+    background: rgba(52, 211, 153, 0.10);
+    color:       #34d399;
+    border-color: rgba(52, 211, 153, 0.22);
+}
+
+/* Workshop paper — slate/violet */
+.pub-type-workshop {
+    background: rgba(139, 92, 246, 0.10);
+    color:       #7c3aed;
+    border-color: rgba(139, 92, 246, 0.25);
+}
+:root[data-theme="dark"] .pub-type-workshop {
+    background: rgba(167, 139, 250, 0.10);
+    color:       #a78bfa;
+    border-color: rgba(167, 139, 250, 0.22);
+}
+
+/* Preprint — neutral rose */
+.pub-type-preprint {
+    background: rgba(244, 63, 94, 0.09);
+    color:       #e11d48;
+    border-color: rgba(244, 63, 94, 0.22);
+}
+:root[data-theme="dark"] .pub-type-preprint {
+    background: rgba(251, 113, 133, 0.10);
+    color:       #fb7185;
+    border-color: rgba(251, 113, 133, 0.22);
+}
+
+/* Venue text — plain secondary, italic */
+.pub-venue {
+    font-style: italic;
+    color: var(--secondary);
+    font-size: 12px;
+}
+
+/* Authors line */
+.pub-authors {
+    color: var(--secondary);
+    font-size: 12px;
+}
+
+/* Event date */
+.pub-event-date {
+    color: var(--secondary);
+    font-size: 12px;
+}
+
+/* DOI — monospaced identifier, links to doi.org */
+.pub-doi {
+    font-size: 11.5px;
+    color: var(--secondary);
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    letter-spacing: 0;
+}
+.pub-doi a {
+    color: var(--accent);
+    text-decoration: none;
+    text-underline-offset: 2px;
+}
+.pub-doi a:hover {
+    text-decoration: underline;
+    color: var(--accent-hover);
+}
+
+/* On the single/detail page the meta block lives in .post-meta —
+   give it a bit more breathing room and wrap nicely */
+.post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--secondary);
+}
+/* The &nbsp;·&nbsp; separator PaperMod renders between meta spans */
+.post-meta span { line-height: 1.5; }
+
+/* On list cards the footer already has flex; just ensure badge
+   doesn't push text onto an ugly new line on small cards */
+.entry-footer .pub-type-badge { flex-shrink: 0; }
+
+/* ── 13. FOOTER ──────────────────────────────────────────── */
+.footer {
+    font-size: 12px;
+    color: var(--secondary);
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+}
+.footer a {
+    color: var(--accent);
+}
+.footer a:hover {
+    color: var(--accent-hover);
+}
+
+/* ── 14. BACK-TO-TOP BUTTON ──────────────────────────────── */
+.top-link {
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--accent);
+    transition:
+        background    0.20s ease,
+        border-color  0.20s ease,
+        box-shadow    0.20s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.top-link:hover {
+    background: var(--accent-subtle);
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px var(--accent-glow);
+}
+/* Reset the drop-shadow filter PaperMod uses */
+.top-link,
+.top-link svg { filter: none; }
+
+/* ── 15. COPY-CODE BUTTON ────────────────────────────────── */
+.copy-code {
+    background: var(--accent);
+    color: #ffffff;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.88;
+    transition: opacity 0.2s ease;
+}
+.copy-code:hover { opacity: 1; }
+
+/* ── 16. THEME TOGGLE ────────────────────────────────────── */
+.theme-toggle {
+    color: var(--secondary);
+    transition: color 0.18s ease;
+}
+.theme-toggle:hover {
+    color: var(--accent);
+}
+
+/* ── 17. PUBLICATION LINK PILLS ──────────────────────────── */
+/*
+   Special styling for ResearchGate / PDF links that appear as
+   bold list items in the publication detail body (e.g. **Full Text:**).
+   We target list items inside .md-content that contain an <a>.
+*/
+.md-content li > strong + a,
+.md-content li > a {
+    display: inline-flex;
+    align-items: center;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    border: 1px solid var(--accent-glow);
+    border-radius: 7px;
+    padding: 3px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+        background   0.18s ease,
+        border-color 0.18s ease,
+        color        0.18s ease;
+    margin-inline-start: 4px;
+}
+.md-content li > strong + a:hover,
+.md-content li > a:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+}
+
+/* ── 18. RESPONSIVE ADJUSTMENTS ──────────────────────────── */
+@media (max-width: 640px) {
+    .main .profile { padding: 40px 16px 36px; }
+    .profile img   { width: 120px; height: 120px; }
+    .post-entry    { padding: 20px 18px; }
+    .buttons       { flex-direction: column; align-items: center; }
+    .button        { width: 100%; justify-content: center; max-width: 280px; }
+}
+
+/* ── 19. SMOOTH SCROLL & SELECTION ──────────────────────── */
+html { scroll-behavior: smooth; }
+
+::selection {
+    background: var(--accent-subtle);
+    color: var(--accent);
+}
+::-moz-selection {
+    background: var(--accent-subtle);
+    color: var(--accent);
+}
+
+/* ── 20. FOCUS-VISIBLE (ACCESSIBILITY) ───────────────────── */
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
 }
