@@ -78,6 +78,22 @@ html, body {
     color: var(--primary);
 }
 
+/* Soft ambient backdrop — barely-visible radial accent glows so the page
+   never feels flat. Sits behind everything, ignores pointer events. */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(900px 600px at 12% -10%,
+            var(--accent-subtle), transparent 60%),
+        radial-gradient(700px 500px at 100% 110%,
+            var(--accent-subtle), transparent 65%);
+    opacity: 0.6;
+}
+
 /* Heading scale + tight tracking */
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Inter', system-ui, sans-serif;
@@ -95,43 +111,132 @@ a {
 a:hover { color: var(--accent-hover); }
 
 /* ── 4. NAVIGATION / HEADER ─────────────────────────────── */
-.header-nav {
-    backdrop-filter: blur(12px) saturate(160%);
-    -webkit-backdrop-filter: blur(12px) saturate(160%);
-    background: color-mix(in srgb, var(--theme) 82%, transparent);
-    border-bottom: 1px solid var(--border);
+/* The whole <header> sticks; the inner <nav> handles layout & glass.
+   We avoid a hard 1px border-bottom (which read as a "broken line"
+   on the screenshot) in favour of a soft scrim-shadow that fades the
+   nav into the page. */
+.header {
     position: sticky;
     top: 0;
     z-index: 100;
+    background: color-mix(in srgb, var(--theme) 78%, transparent);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 1px 0 0 color-mix(in srgb, var(--border) 55%, transparent),
+                0 8px 24px -16px rgba(0, 0, 0, 0.18);
+}
+:root[data-theme="dark"] .header {
+    box-shadow: 0 1px 0 0 color-mix(in srgb, var(--border) 70%, transparent),
+                0 10px 32px -18px rgba(0, 0, 0, 0.55);
 }
 
+.header-nav {
+    padding-block: 8px;
+    line-height: 1.4;
+    min-height: var(--header-height);
+    align-items: center;
+}
+
+/* ── Brand mark (logo) ─────────────────────────────────── */
+.logo {
+    align-items: center;
+    column-gap: 10px;
+}
 .logo a {
-    font-size: 17px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
     font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
     color: var(--primary);
+    padding: 6px 4px;
+    border-radius: 8px;
+    transition: color 0.18s ease;
+}
+/* Small accent dot before the name — turns a plain text logo into a brand mark */
+.logo a::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-subtle);
+    flex-shrink: 0;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.logo a:hover { color: var(--accent); }
+.logo a:hover::before {
+    box-shadow: 0 0 0 5px var(--accent-glow);
+    transform: scale(1.08);
 }
 
+/* ── Menu links ────────────────────────────────────────── */
+.menu {
+    column-gap: 4px;
+    align-items: center;
+}
+.menu li { display: flex; }
 .menu a {
-    font-size: 14px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13.5px;
     font-weight: 500;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.005em;
     color: var(--secondary);
-    transition: color 0.18s ease;
-    padding: 4px 0;
-    border-bottom: 2px solid transparent;
+    padding: 7px 14px;
+    border-radius: 8px;
+    transition:
+        color           0.18s ease,
+        background      0.18s ease;
 }
-.menu a:hover,
-.menu .active {
-    color: var(--accent);
+.menu a:hover {
+    color: var(--primary);
+    background: color-mix(in srgb, var(--accent-subtle) 80%, transparent);
     text-decoration: none;
-    border-bottom-color: var(--accent);
 }
-/* Override PaperMod's underline-decoration on active */
 .menu .active {
-    text-decoration: none !important;
+    color: var(--accent) !important;
     font-weight: 600;
+    background: var(--accent-subtle);
+    text-decoration: none !important;
+    text-decoration-thickness: 0 !important;
 }
+/* External-link icon next to the menu item — tone it down */
+.menu a svg {
+    opacity: 0.55;
+    transition: opacity 0.18s ease;
+}
+.menu a:hover svg { opacity: 0.9; }
+
+/* ── Theme toggle — make it feel like a real button ───── */
+.logo-switches { gap: 6px; }
+.theme-toggle {
+    width: 34px;
+    height: 34px;
+    padding: 0 !important;
+    border-radius: 8px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    transition:
+        color        0.18s ease,
+        background   0.18s ease,
+        border-color 0.18s ease;
+}
+.theme-toggle:hover {
+    color: var(--accent);
+    background: var(--accent-subtle);
+    border-color: color-mix(in srgb, var(--accent-glow) 60%, transparent);
+}
+.theme-toggle svg { width: 16px; height: 16px; }
 
 /* ── 5. PROFILE HERO ─────────────────────────────────────── */
 .main .profile {
