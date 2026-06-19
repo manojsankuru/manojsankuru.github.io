@@ -1,38 +1,41 @@
 /* ============================================================
-   RESEARCH PORTFOLIO — INDEX DESIGN (Theme C)
-   Modern blue/white, Space Grotesk + IBM Plex Sans
+   RESEARCH PORTFOLIO — ARCHIVE DESIGN (Theme A)
+   Warm cream paper, Newsreader serif italics, rust-red accent.
+   Editorial feel with framed portrait and pill buttons.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 /* ── 1. DESIGN TOKENS ─────────────────────────────────────── */
 :root,
 :root[data-theme="light"],
 :root[data-theme="dark"] {
     /* Layout */
-    --maxw:   1120px;
-    --pad:    clamp(20px, 5vw, 72px);
-    --radius: 11px;
-    --radius-lg: 16px;
-    --hero-weight: 600;
+    --maxw:    1120px;
+    --pad:     clamp(20px, 5vw, 72px);
+    --radius:  5px;
+    --radius-lg: 7px;
+    --pill:    999px;          /* pill radius for buttons / CTAs / tags */
+    --hero-weight: 500;
+    --display-italic: italic;
 
-    /* Palette — Theme C: Index */
-    --bg:          #ffffff;
-    --surface:     #f6f7f9;
-    --surface-2:   #eef1f5;
-    --text:        #0d1117;
-    --muted:       #59626f;
-    --faint:       #98a1ad;
-    --line:        #e4e8ee;
-    --accent:      #2347ff;
-    --accent-soft: #e9edff;
-    --on-accent:   #ffffff;
+    /* Palette — Theme A: Archive (warm cream + rust-red) */
+    --bg:          #f4efe6;
+    --surface:     #fffdf8;
+    --surface-2:   #efe8da;
+    --text:        #211d18;
+    --muted:       #6f6657;
+    --faint:       #9a8f7d;
+    --line:        #ded4c2;
+    --accent:      #8a2b24;
+    --accent-soft: #f0e2db;
+    --on-accent:   #fffdf8;
 
-    /* Typography */
-    --font-display: "Space Grotesk", system-ui, sans-serif;
+    /* Typography — display in Newsreader serif, body in IBM Plex Sans */
+    --font-display: "Newsreader", Georgia, "Times New Roman", serif;
     --font-body:    "IBM Plex Sans", system-ui, sans-serif;
     --font-mono:    "JetBrains Mono", monospace;
-    --font-label:   "JetBrains Mono", monospace;
+    --font-label:   "Newsreader", Georgia, serif;
 
     /* PaperMod var bridge — so PaperMod-rendered pages (publications detail)
        inherit Index palette without us touching its templates. */
@@ -75,15 +78,17 @@ img { max-width: 100%; display: block; }
 /* ── 3. UTILITIES ────────────────────────────────────────── */
 .wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--pad); }
 
+/* Archive eyebrow — serif italic with small-caps, not all-caps mono */
 .eyebrow {
     display: inline-flex;
     align-items: baseline;
     gap: .6em;
     font-family: var(--font-label);
-    font-size: 12.5px;
-    font-weight: 600;
-    letter-spacing: .16em;
-    text-transform: uppercase;
+    font-style: italic;
+    font-variant: small-caps;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: .04em;
     color: var(--accent);
     margin-bottom: 22px;
 }
@@ -91,6 +96,8 @@ img { max-width: 100%; display: block; }
     content: attr(data-num);
     color: var(--faint);
     font-family: var(--font-mono);
+    font-style: normal;
+    font-variant: normal;
     letter-spacing: 0;
 }
 
@@ -146,16 +153,35 @@ img { max-width: 100%; display: block; }
 }
 .nav-links a:hover,
 .nav-links a.active { color: var(--text); }
+/* Archive CTA — editorial serif link, no border. Arrow shifts on hover. */
 .nav-cta {
-    font-family: var(--font-mono);
-    font-size: 12.5px;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 17px;
     font-weight: 500;
-    padding: 8px 16px;
-    border: 1px solid var(--accent);
     color: var(--accent);
-    border-radius: var(--radius);
-    transition: all .2s ease;
+    padding: 4px 2px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    transition: color .2s ease;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    line-height: 1;
+}
+.nav-cta::after {
+    content: "→";
+    font-style: normal;
+    font-size: 0.95em;
+    transition: transform .2s ease;
     display: inline-block;
+}
+.nav-cta:hover {
+    color: var(--text);
+}
+.nav-cta:hover::after {
+    transform: translateX(3px);
 }
 .nav-cta:hover {
     background: var(--accent);
@@ -171,18 +197,22 @@ img { max-width: 100%; display: block; }
     display: grid;
     grid-template-columns: 1.55fr .85fr;
     gap: clamp(32px, 6vw, 72px);
-    align-items: center;
+    align-items: start;            /* image top aligns with h1 top */
 }
 .hero h1 {
     font-family: var(--font-display);
     font-weight: var(--hero-weight);
     font-size: clamp(40px, 6.4vw, 78px);
-    line-height: 1.02;
-    letter-spacing: -.02em;
+    line-height: 1.05;
+    letter-spacing: -.015em;
     margin: 0 0 22px;
     color: var(--text);
 }
-.hero h1 .accent { color: var(--accent); }
+.hero h1 .accent {
+    color: var(--accent);
+    font-style: var(--display-italic);   /* italic on Archive */
+    font-weight: var(--hero-weight);
+}
 .role {
     font-family: var(--font-mono);
     font-size: 14px;
@@ -195,8 +225,10 @@ img { max-width: 100%; display: block; }
 }
 .role .sep { color: var(--accent); }
 .lede {
-    font-size: clamp(17px, 1.7vw, 20px);
-    line-height: 1.6;
+    /* Archive uses the serif display family for the lede for editorial feel */
+    font-family: var(--font-display);
+    font-size: clamp(19px, 2vw, 23px);
+    line-height: 1.55;
     color: var(--text);
     max-width: 30em;
     margin: 0 0 34px;
@@ -214,7 +246,7 @@ img { max-width: 100%; display: block; }
     font-size: 13px;
     font-weight: 500;
     padding: 11px 18px;
-    border-radius: var(--radius);
+    border-radius: var(--pill);   /* Archive pill buttons */
     border: 1px solid var(--line);
     background: var(--surface);
     color: var(--text);
@@ -237,8 +269,14 @@ img { max-width: 100%; display: block; }
 }
 .btn svg { width: 15px; height: 15px; }
 
+/* Portrait — refined editorial frame. Max width keeps it from dominating the
+   hero, warm tint marries it to the cream palette, soft sepia gives it a
+   printed-photograph feel. Offset accent frame sits behind the image. */
 .portrait-frame {
     position: relative;
+    max-width: 360px;
+    margin-inline: auto;
+    margin-top: 8px;               /* nudge down so it visually aligns with h1 cap-height */
 }
 .portrait-frame img {
     width: 100%;
@@ -247,6 +285,22 @@ img { max-width: 100%; display: block; }
     border-radius: var(--radius-lg);
     border: 1px solid var(--line);
     display: block;
+    position: relative;
+    z-index: 1;
+    filter: saturate(0.92) sepia(0.06) contrast(1.02);
+    box-shadow:
+        0 1px 0 0 rgba(33, 29, 24, 0.04),
+        0 18px 40px -22px rgba(33, 29, 24, 0.25);
+}
+.portrait-frame::after {
+    content: "";
+    position: absolute;
+    inset: 12px -12px -12px 12px;
+    z-index: 0;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    pointer-events: none;
+    opacity: 0.85;
 }
 
 /* ── 6. SECTION SHELL ────────────────────────────────────── */
@@ -357,7 +411,7 @@ section.block {
     margin-top: 11px;
     padding: 3px 9px;
     border: 1px solid var(--accent);
-    border-radius: var(--radius);
+    border-radius: var(--pill);
 }
 .pub .links {
     display: flex;
