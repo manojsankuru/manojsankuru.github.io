@@ -1,0 +1,15 @@
+{{- $isHome := .IsHome }}
+<header class="header">
+    <nav class="header-nav">
+        <a href="{{ "" | absLangURL }}" class="brand" title="{{ site.Title }}">
+            <span class="dot"></span>{{ site.Title }}
+        </a>
+        <ul class="nav-links">
+            <li><a href="{{ cond $isHome "#about" (printf "%s#about" (absLangURL "")) }}">About</a></li>
+            <li><a href="{{ cond $isHome "#research" (printf "%s#research" (absLangURL "")) }}">Research</a></li>
+            <li><a href="{{ cond $isHome "#publications" (printf "%s#publications" (absLangURL "")) }}">Publications</a></li>
+            <li><a href="{{ cond $isHome "#news" (printf "%s#news" (absLangURL "")) }}">News</a></li>
+        </ul>
+        <a href="{{ cond $isHome "#contact" (printf "%s#contact" (absLangURL "")) }}" class="nav-cta">Get in touch</a>
+    </nav>
+</header>

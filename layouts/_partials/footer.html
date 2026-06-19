@@ -1,0 +1,5 @@
+{{- if not .IsHome }}
+<footer class="footer">
+    <span>© {{ now.Year }} {{ site.Title }} · <a href="{{ "" | absLangURL }}">Home</a></span>
+</footer>
+{{- end }}
