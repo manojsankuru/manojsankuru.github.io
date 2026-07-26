@@ -276,13 +276,14 @@ img { max-width: 100%; display: block; }
    above the hair, so the circle lands on the face without clipping it. */
 .portrait-frame {
     position: relative;
-    max-width: 360px;
+    width: 280px;                  /* both dimensions fixed — a width-only rule lets the */
+    height: 280px;                 /* img height attribute win and stretch it into an oval */
     margin-inline: auto;
     margin-top: 8px;               /* nudge down so it visually aligns with h1 cap-height */
 }
 .portrait-frame img {
     width: 100%;
-    aspect-ratio: 1/1;
+    height: 100%;
     object-fit: cover;
     border-radius: 50%;
     border: 1px solid var(--line);
@@ -759,7 +760,7 @@ body.list:not(:has(.hero)) .page-header {
 /* ── 12. RESPONSIVE ──────────────────────────────────────── */
 @media (max-width: 860px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
-    .portrait-frame { max-width: 300px; }
+    .portrait-frame { width: 220px; height: 220px; }
     .focus-grid { grid-template-columns: 1fr; }
     .nav-links { display: none; }
     .pub { grid-template-columns: 1fr; gap: 12px; }
