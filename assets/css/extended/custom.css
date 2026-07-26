@@ -269,9 +269,11 @@ img { max-width: 100%; display: block; }
 }
 .btn svg { width: 15px; height: 15px; }
 
-/* Portrait — refined editorial frame. Max width keeps it from dominating the
-   hero, warm tint marries it to the cream palette, soft sepia gives it a
-   printed-photograph feel. Offset accent frame sits behind the image. */
+/* Portrait — round medallion. Max width keeps it from dominating the hero,
+   warm tint marries it to the cream palette, soft sepia gives it a
+   printed-photograph feel. A concentric accent ring sits outside the image.
+   The source file is already a square head-and-shoulders crop with headroom
+   above the hair, so the circle lands on the face without clipping it. */
 .portrait-frame {
     position: relative;
     max-width: 360px;
@@ -280,9 +282,9 @@ img { max-width: 100%; display: block; }
 }
 .portrait-frame img {
     width: 100%;
-    aspect-ratio: 4/5;
+    aspect-ratio: 1/1;
     object-fit: cover;
-    border-radius: var(--radius-lg);
+    border-radius: 50%;
     border: 1px solid var(--line);
     display: block;
     position: relative;
@@ -295,10 +297,10 @@ img { max-width: 100%; display: block; }
 .portrait-frame::after {
     content: "";
     position: absolute;
-    inset: 12px -12px -12px 12px;
+    inset: -14px;
     z-index: 0;
     border: 1px solid var(--accent);
-    border-radius: var(--radius-lg);
+    border-radius: 50%;
     pointer-events: none;
     opacity: 0.85;
 }
