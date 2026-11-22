@@ -1,0 +1,48 @@
+{{- $u := urls.Parse .Destination -}}
+{{- $src := $u.String -}}
+{{- $res := "" -}}
+{{- if not $u.IsAbs -}}
+  {{- $path := strings.TrimPrefix "./" $u.Path -}}
+  {{- $res = or (.PageInner.Resources.Get $path) (resources.Get $path) -}}
+{{- end -}}
+{{- $attrs := dict "alt" .PlainText "loading" "lazy" "decoding" "async" -}}
+{{- $shape := "wide" -}}
+{{- with $res -}}
+  {{- $src = .RelPermalink -}}
+  {{- if eq .ResourceType "image" -}}
+    {{- $attrs = merge $attrs (dict "width" .Width "height" .Height) -}}
+    {{- $ratio := div (float .Height) .Width -}}
+    {{- if gt $ratio 1.2 -}}{{- $shape = "tall" -}}{{- else if gt $ratio 0.75 -}}{{- $shape = "square" -}}{{- end -}}
+    {{- if in (slice "png" "jpeg") .MediaType.SubType -}}
+      {{- $w := .Width -}}
+      {{- $widths := slice -}}
+      {{- range slice 800 1600 -}}
+        {{- if lt . $w -}}{{- $widths = $widths | append . -}}{{- end -}}
+      {{- end -}}
+      {{- if lt $w 1600 -}}{{- $widths = $widths | append $w -}}{{- end -}}
+      {{- $set := slice -}}
+      {{- $main := . -}}
+      {{- range $widths -}}
+        {{- $main = $res.Process (printf "resize %dx webp q85 drawing" .) -}}
+        {{- $set = $set | append (printf "%s %dw" $main.RelPermalink $main.Width) -}}
+      {{- end -}}
+      {{- $sizes := index (dict "tall" "(max-width: 520px) 100vw, 460px" "square" "(max-width: 740px) 100vw, 680px" "wide" "(max-width: 1000px) 100vw, 960px") $shape -}}
+      {{- $attrs = merge $attrs (dict "srcset" (delimit $set ", ") "sizes" $sizes "width" $main.Width "height" $main.Height) -}}
+      {{- $src = $main.RelPermalink -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $attrs = merge .Attributes $attrs (dict "src" $src) -}}
+{{- $img := "<img" -}}
+{{- range $k, $v := $attrs -}}
+  {{- if $v -}}{{- $img = printf `%s %s="%s"` $img $k (htmlEscape (string $v)) -}}{{- end -}}
+{{- end -}}
+{{- $img = printf "%s>" $img -}}
+{{- if .IsBlock -}}
+<figure class="post-figure is-{{ $shape }}">
+  {{- with $res }}<a href="{{ .RelPermalink }}" target="_blank" rel="noopener" title="Open full-size image">{{ $img | safeHTML }}</a>{{ else }}{{ $img | safeHTML }}{{ end }}
+  {{- with .Title }}<figcaption>{{ . }}</figcaption>{{ end -}}
+</figure>
+{{- else -}}
+{{ $img | safeHTML }}
+{{- end -}}

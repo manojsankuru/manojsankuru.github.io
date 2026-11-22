@@ -757,6 +757,60 @@ body.list:not(:has(.hero)) .page-header {
     align-items: center;
 }
 
+/* ── 11b. BLOG POST ──────────────────────────────────────── */
+.blog-post {
+    --col: 720px;
+    --fig-w: min(960px, calc(100vw - 2 * var(--pad)));
+    max-width: var(--col);
+    margin-inline: auto;
+}
+.blog-post .post-description {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 2vw, 21px);
+    line-height: 1.5;
+    color: var(--muted);
+    margin-top: 4px;
+}
+.blog-post .post-content p { margin: 0 0 1.15em; }
+.blog-post .post-content ul { margin: 0 0 1.15em; padding-inline-start: 1.4em; }
+.blog-post .post-content li { margin-bottom: .35em; }
+.blog-post .post-content sup { font-size: .72em; line-height: 0; }
+.blog-post .post-figure {
+    width: var(--fig-w);
+    margin: 36px 0 36px calc((100% - var(--fig-w)) / 2);
+}
+.blog-post .post-figure.is-square { width: min(680px, 100%); margin-inline: auto; }
+.blog-post .post-figure.is-tall   { width: min(460px, 100%); margin-inline: auto; }
+.blog-post .post-figure a { display: block; text-decoration: none; }
+.blog-post .post-figure img {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+.blog-post .post-figure img[src$=".gif"] { width: auto; max-width: 100%; margin-inline: auto; }
+.blog-post .post-figure figcaption {
+    max-width: var(--col);
+    margin: 12px auto 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--muted);
+    text-align: left;
+}
+.blog-post .math-block {
+    margin: 22px 0 26px;
+    padding: 6px 2px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    font-size: 1.2em;
+}
+.blog-post math { font-family: "Cambria Math", "STIX Two Math", "Latin Modern Math", math; }
+
 /* ── 12. RESPONSIVE ──────────────────────────────────────── */
 @media (max-width: 860px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }

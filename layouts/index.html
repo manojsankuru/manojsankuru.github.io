@@ -88,11 +88,38 @@
     </div>
   </section>
 
+  <!-- BLOG -->
+  <section class="block" id="blog">
+    <div class="wrap">
+      <div class="eyebrow" data-num="04">Blog</div>
+      <div class="pub-list post-list">
+        {{- range (where .Site.RegularPages "Section" "blog").ByDate.Reverse }}
+        <article class="pub">
+          <div class="year">{{ .Date.Format "Jan 2006" }}</div>
+          <div class="body">
+            <div class="title"><a href="{{ .Permalink }}">{{ .Title }}</a></div>
+            {{- with .Description }}
+            <div class="authors">{{ . }}</div>
+            {{- end }}
+          </div>
+          <div class="links">
+            <a href="{{ .Permalink }}">Read</a>
+          </div>
+        </article>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+
   <!-- NEWS -->
   <section class="block" id="news">
     <div class="wrap">
-      <div class="eyebrow" data-num="04">Recent news</div>
+      <div class="eyebrow" data-num="05">Recent news</div>
       <div class="news-list">
+        <div class="news-item">
+          <div class="date">Nov 2026</div>
+          <p>New blog post: <a href="/blog/riemann-hypothesis-visual-tour/">Is Math Rediscovering Itself? A Visual Tour of the Riemann Hypothesis</a>.</p>
+        </div>
         <div class="news-item">
           <div class="date">Apr 2025</div>
           <p>Presented <a href="/publications/dgm-cam/">DGM-CAM</a> as a poster at the UMass Dartmouth Sigma Xi 29th Annual Research Exhibition.</p>
@@ -108,7 +135,7 @@
   <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="wrap">
-      <div class="eyebrow" data-num="05">Get in touch</div>
+      <div class="eyebrow" data-num="06">Get in touch</div>
       <div class="foot-grid">
         <h2>Always glad to talk<br>research &amp; collaborations.<br><a href="mailto:msankur@clemson.edu">msankur@clemson.edu</a></h2>
         <div class="foot-links">
