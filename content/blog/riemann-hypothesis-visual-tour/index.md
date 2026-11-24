@@ -104,6 +104,5 @@ So why is this not a proof? There are infinitely many zeros, and 12 trillion is 
 ## Sources
 
 - https://terrytao.wordpress.com/2010/04/10/the-euler-maclaurin-formula-bernoulli-numbers-the-zeta-function-and-real-variable-analytic-continuation/
-- [Anthropic: Claude and the Riemann zeta function](https://anthropic.com/research/riemann-zeta)
 - [Quanta Magazine: AI proved the quasi-Riemann hypothesis](https://quantamagazine.org/ai-proved-the-quasi-riemann-hypothesis-what-happens-now-20261019)
 - [https://www.youtube.com/watch?v=-dhHrg-KbJ0](https://www.youtube.com/watch?v=-dhHrg-KbJ0)
